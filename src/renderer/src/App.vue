@@ -1,13 +1,24 @@
-<script setup lang="ts">
+<script setup>
 import Versions from './components/Versions.vue'
+import { ref } from 'vue'
+
+import { onBeforeMount } from 'vue'
+const firstRun = ref()
+onBeforeMount(async () => {
+  firstRun.value = await window.api.task.get()
+  console.log(firstRun)
+})
 </script>
 
 <template>
   <Versions></Versions>
+  <div>
+    {{ firstRun }}
+  </div>
   <svg viewBox="0 0 900 300">
     <use xlink:href="./assets/icons.svg#electron" />
   </svg>
-  <h2>You've successfully created an Electron project with Vue and TypeScript</h2>
+  <h2>You've successfully created an Electron project with Vue</h2>
 
   <p class="desc">Please try pressing <code>F12</code> to open the devTool</p>
 

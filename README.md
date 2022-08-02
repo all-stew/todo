@@ -1,6 +1,6 @@
 # todo
 
-An Electron application with Vue and TypesSript
+An Electron application with Vue
 
 ## Recommended IDE Setup
 
@@ -31,4 +31,35 @@ $ npm run build:mac
 
 # For Linux
 $ npm run build:linux
+```
+
+### Project Structure
+
+The structure of this template is very similar to the structure of a monorepo.
+
+```mermaid
+flowchart TB;
+
+packages/preload <-. IPC Messages .-> packages/main
+
+subgraph packages/main
+M[index.ts] --> EM[Electron Main Process Modules]
+M --> N2[Node.js API]
+end
+
+
+subgraph packages/preload
+P[index.ts] --> N[Node.js API]
+P --> ED[External dependencies]
+P --> ER[Electron Renderer Process Modules]
+end
+
+
+subgraph packages/renderer
+R[index.html] --> W[Web API]
+R --> BD[Bundled dependencies]
+R --> F[Web Frameforks]
+end
+
+packages/renderer -- Call Exposed API --> P
 ```
